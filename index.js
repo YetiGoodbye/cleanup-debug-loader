@@ -6,9 +6,13 @@ const defaultMarker = "@#";
 const schema = {
   type: 'object',
   marker: { type: 'string' },
-  stripDev: { type: 'string' },
-  stripNonDev: { type: 'string' },
+  dropInDev: { type: 'string' },
+  dropInProd: { type: 'string' },
 };
+
+const lineStart = "(^|\n)";
+const whiteSpace = "\s*";
+const restLine = "\s*";
 
 function cleanup(source){
   
@@ -19,57 +23,23 @@ function cleanup(source){
   var options = getOptions(this);
   options = options || {};
   options.marker = options.marker || defaultMarker;
-  options.stripDev = options.stripDev || '+';
-  options.stripNonDev = options.stripNonDev || '-';
+  options.dropInDev = options.dropInDev || '+';
+  options.dropInProd = options.dropInProd || '-';
 
   validateOptions(schema, options, 'Clenup Debug Loader');
   console.log(options);
 
-  
-  const devmatch    = options.marker + '[' + options.stripDev    + ']';
-  const nondevmatch = options.marker + '[' + options.stripNonDev + ']';
+  const dropInDev  = RegExp(`((^|\n)\s*)${options.marker}[${options.dropInDev}](.*)`,  'g');
+  const dropInProd = RegExp(`((^|\n)\s*)${options.marker}[${options.dropInProd}](.*)`, 'g');
 
-  const stripLineRegex = RegExp(`^\s*(${devmatch})|(${nondevmatch})`);
-  // const stripLineRegex = RegExp(`^\s*${options.marker}[${options.stripDev}${options.stripNonDev}]\s`);
-  console.log("regex: ", stripLineRegex);
+  // /((^|\n)\s*)@@[$](.*)/g
 
-  var lines = source.split("\n");
-  var i = 0;
-  while(i < lines.length){
-    if(stripLineRegex.test(lines[i])){
-      console.log("1: '" + RegExp.$1 + "';2: '" + RegExp.$2 + "'");
-      if(RegExp.$1){
-        console.log("match 1");
-        if(devmode) {
-          lines.splice(i, 1);
-          console.log("splice dev");
-        } else {
-          lines[i] = lines[i].replace(options.marker + options.stripDev, '');
-          console.log("replace nondev" + options.marker + options.stripDev);
-          i++;
-        }
-      } else {
-        console.log("match 2");
-        if(devmode) {
-          lines[i] = lines[i].replace(options.marker + options.stripNonDev, '');
-          console.log("replace dev" + options.marker + options.stripNonDev);
-          console.log(lines[i]);
-          i++;
-        } else {
-          lines.splice(i, 1);
-          console.log("splice nondev");
-        }
-      }
-    } else {
-      i++;
-    }
+  if(devmode){
+    return source.replace(dropInDev, '').replace(dropInProd,'$1$3');
+  } else {
+    return source.replace(dropInProd, '').replace(dropInDev,'$1$3');
   }
-  // console.log("afterwhile");
-  console.log("---------------------------------------\n\n\n");
-
-  return lines.join("\n");
 }
-
 
 
 module.exports = cleanup;
