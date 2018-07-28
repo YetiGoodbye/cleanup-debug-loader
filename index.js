@@ -17,7 +17,7 @@ function cleanup(source){
   
   var options = this.query;
   options = options || {};
-  const m = options.marker = options.marker || '@#';
+  const m = options.marker = options.marker || '#';
   const dd = options.dropInDev = options.dropInDev || '[+]';
   const dp = options.dropInProd = options.dropInProd || '[-]';
 
