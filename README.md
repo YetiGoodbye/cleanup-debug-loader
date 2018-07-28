@@ -1,5 +1,5 @@
 # cleanup-debug-loader
-Depending on environment running, strips out from source code lines marked in special way.
+It's just couple of regex in build process. Depending on environment running, strips out from source code lines marked in special way, alowing you not to cary about cleaning out debugging code from production.
 Now instead of
 ```javascript
 if(node.ENV === 'development'){
