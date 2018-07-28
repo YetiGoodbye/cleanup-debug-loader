@@ -1,0 +1,20 @@
+{
+  "name": "cleanup-debug-loader",
+  "version": "1.0.0",
+  "description": "clean-up debugging lines from javascript",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YetiGoodbye/cleanup-debug-loader.git"
+  },
+  "author": "Niyaz Akhmetov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YetiGoodbye/cleanup-debug-loader/issues"
+  },
+  "homepage": "https://github.com/YetiGoodbye/cleanup-debug-loader#readme",
+  "dependencies": {
+    "loader-utils": "^1.1.0",
+    "schema-utils": "^0.4.5"
+  }
+}
