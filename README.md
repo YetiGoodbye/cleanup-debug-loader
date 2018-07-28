@@ -16,6 +16,7 @@ you just can write
 npm i --save-dev cleanup-debug-loader
 ```
 ##### webpack.config.js
+It must be the last js loader in pipline, or you get a syntax error
 ```javascript
 {
   module: {
