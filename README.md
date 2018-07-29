@@ -1,5 +1,5 @@
 # cleanup-debug-loader
-It's just couple of regex in build process. Depending on environment running, strips out from source code lines marked in special way, alowing you not to cary about cleaning out debugging code from production.
+It's just couple of regex in build process to filter out lines or blocks of unnecessary code depending on running evironment (development or production). It allow you not to cary about cleaning out debug code from production.
 Now instead of
 ```javascript
 if(node.ENV === 'development'){
@@ -16,11 +16,15 @@ you just can write
 npm i --save-dev cleanup-debug-loader
 ```
 ##### webpack.config.js
-It must be the last js loader in pipline, or you get a syntax error
+It must be the last js loader in pipeline, or you get a syntax error
 ```javascript
 {
   module: {
     rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'any-other-js-loader',
+    },{
       test: /\.js$/,
       exclude: /node_modules/,
       use: [{ loader: 'cleanup-debug-loader') }],
@@ -44,8 +48,8 @@ All options are injected directly into regexp. So if changing defaults, do it wi
       use: [{
         loader: 'cleanup-debug-loader',
         options: {
-          marker: '@@',
-          dropInDev: '[$]',
+          marker: '@@',  // change default
+          dropInDev: '[$]', // it's regexp special
           dropInProd: 'p',
         }
       }],
@@ -55,8 +59,7 @@ All options are injected directly into regexp. So if changing defaults, do it wi
 ```
 ## Usage
 Prepend lines you wish to keep only in dev mode with `#-` (any whitespace allowed). If there is something you want to strip out from development, prepend it with with `#+`.
-Or wrap entire blocks as shown below. Nesting is not supported.
-
+You can also wrap entire blocks as shown below. Nesting is not supported.
 ```javascript
 #- console.log('This line will be keeped only in development')
 

@@ -23,14 +23,20 @@ function cleanup(source){
 
   validateOptions(schema, options, 'Clenup Debug Loader');
 
-  const dropInDev  =     RegExp(`(^\s*)${m}${dd}(.*)`,  'gm');
+  const dropInDev  =     RegExp(
+    '(^\\s*)' + m + dd + '(.*)', 
+    'gm'
+  );
 
   const dropBlockInDev  = RegExp(
     '^\\s*' + m + dd + '\\[\\s*' +
     '(\\n(.*\\n)*)\\s*' + m + dd + '\\]\\s*\\n',
     'gm');
 
-  const dropInProd =      RegExp(`(^\s*)${m}${dp}(.*)`, 'gm');
+  const dropInProd = RegExp(
+    '(^\\s*)' + m + dp +'(.*)',
+    'gm'
+  );
 
   const dropBlockInProd = RegExp(
     '^\\s*' + m + dp + '\\[\\s*' +
