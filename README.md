@@ -33,7 +33,7 @@ It must be the last js loader in pipeline, or you get a syntax error
 };
 ```
 ## Configuration
-Loader supports several options. To find out if this is development environment, loader user `mode` webpack option. So it should be presented in configuration file. You can also change start marker (default is #) and hallmarks for dev and nondev modes (defaults `+` and `-`).
+Loader supports several options. To find out if this is development environment, loader use `mode` webpack option. So it should be presented in configuration file. You can also change start marker (default is #) and hallmarks for dev and nondev modes (defaults `+` and `-`).
 ##### little attention
 All options are injected directly into regexp. So if changing defaults, do it with caution if using special regexp characters (should be wrapped with square brackets).
 
@@ -78,5 +78,8 @@ console.log("Hello, I'm turtle")
 ## Warning!
 Loader relies on `_compilation` property of loader context https://webpack.js.org/api/loaders/#this-_compilation.
 Webpack is not recommending to do so. But it's still working for now, and I'm ok with that.
+
+## Issues
+If you have any issues with it please report https://github.com/YetiGoodbye/cleanup-debug-loader/issues
 
 ### Thanks and enjoy!
